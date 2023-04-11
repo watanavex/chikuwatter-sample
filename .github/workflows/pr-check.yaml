@@ -1,0 +1,27 @@
+name: PR Check
+
+on:
+  pull_request:
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
+      - name: Set up flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      - name: Run flutter analyze
+        run: flutter analyze > result.log
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: Run danger
+        run: bundle exec danger
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
