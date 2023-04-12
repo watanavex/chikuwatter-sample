@@ -6,16 +6,10 @@ on:
 jobs:
   pr-check:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
-      - uses: kuhnroyal/flutter-fvm-config-action@v1
-      - name: Set up flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: ${{ env.FLUTTER_CHANNEL }}
-      - name: Run flutter analyze
-        run: flutter analyze > result.log
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
