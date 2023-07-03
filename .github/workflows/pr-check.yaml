@@ -17,7 +17,9 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
       - name: Run flutter analyze
-        run: flutter analyze 2>&1 | tee result.log
+        run: flutter analyze 2>&1 | tee analyze.log
+      - name: Run riverpod_lint
+        run: dart run custom_lint 2>&1 | tee riverpod_lint.log
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
